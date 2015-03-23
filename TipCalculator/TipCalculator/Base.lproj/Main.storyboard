@@ -62,7 +62,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sgs-oy-ggf" userLabel="Politeness Slider">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sgs-oy-ggf" userLabel="Politeness Slider">
                                 <rect key="frame" x="115" y="353" width="128" height="31"/>
                                 <connections>
                                     <action selector="politenessChange:" destination="vXZ-lx-hvc" eventType="valueChanged" id="iaI-hO-cSn"/>
@@ -79,7 +79,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="WSp-Qc-BqZ" userLabel="Accuracy Slider">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="WSp-Qc-BqZ" userLabel="Accuracy Slider">
                                 <rect key="frame" x="115" y="417" width="128" height="31"/>
                                 <connections>
                                     <action selector="accuracyChange:" destination="vXZ-lx-hvc" eventType="valueChanged" id="mfy-VY-UG7"/>
@@ -96,7 +96,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="I7G-Pu-kbo" userLabel="Promptness Slider">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="I7G-Pu-kbo" userLabel="Promptness Slider">
                                 <rect key="frame" x="115" y="481" width="128" height="31"/>
                                 <connections>
                                     <action selector="promptnessChange:" destination="vXZ-lx-hvc" eventType="valueChanged" id="VXL-kO-NCp"/>
