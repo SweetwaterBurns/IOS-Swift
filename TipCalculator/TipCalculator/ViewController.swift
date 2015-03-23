@@ -46,11 +46,6 @@ class ViewController: UIViewController {
         refreshUI()
     }
     
-/*    @IBAction func calculate(sender: AnyObject) {
-        tipCalc.billTotal = Double((billTextField.text as NSString).doubleValue)
-        refreshUI()
-    }
-  */
     @IBAction func viewTapped(sender : AnyObject) {
           billTextField.resignFirstResponder()
     }
