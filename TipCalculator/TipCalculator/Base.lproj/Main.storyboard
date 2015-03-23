@@ -7,7 +7,7 @@
         <!--Tip Calculator-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="TipCalculator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="vXZ-lx-hvc" customClass="ViewController" customModule="TipCalculator" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -16,32 +16,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="hoW-Ye-Gus">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bill" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWR-84-pHJ">
                                 <rect key="frame" x="16" y="100" width="24" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="left" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XyV-fo-Soo" userLabel="Bill Text Field">
+                            <textField opaque="NO" contentMode="left" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XyV-fo-Soo" userLabel="Bill Text Field">
                                 <rect key="frame" x="249" y="97" width="64" height="30"/>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" keyboardType="decimalPad" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
                                     <action selector="billChanged:" destination="vXZ-lx-hvc" eventType="editingChanged" id="9oz-Wl-66a"/>
                                     <action selector="billChanged:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="Nww-C7-gae"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tip" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITb-f3-2GW">
-                                <rect key="frame" x="16" y="180" width="24" height="24"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iR0-1n-KTX" userLabel="Tip Percent Text View">
+                                <rect key="frame" x="11" y="171" width="96" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView opaque="NO" contentMode="left" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBY-XJ-qxb" userLabel="Tip Text View">
-                                <rect key="frame" x="249" y="180" width="64" height="24"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView opaque="NO" contentMode="left" fixedFrame="YES" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="GBY-XJ-qxb" userLabel="Tip Text View">
+                                <rect key="frame" x="249" y="171" width="64" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n4T-OH-wWu">
@@ -50,10 +51,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView opaque="NO" contentMode="left" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jca-qB-h4K" userLabel="Total Text View">
-                                <rect key="frame" x="249" y="260" width="64" height="24"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textView opaque="NO" contentMode="left" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Jca-qB-h4K" userLabel="Total Text View">
+                                <rect key="frame" x="249" y="249" width="64" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" fixedFrame="YES" text="Politeness" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHy-Lk-8SL">
@@ -68,10 +68,9 @@
                                     <action selector="politenessChange:" destination="vXZ-lx-hvc" eventType="valueChanged" id="iaI-hO-cSn"/>
                                 </connections>
                             </slider>
-                            <textView opaque="NO" contentMode="left" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbc-pM-hLF" userLabel="Politeness Text View">
-                                <rect key="frame" x="249" y="356" width="64" height="24"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textView opaque="NO" contentMode="left" fixedFrame="YES" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lbc-pM-hLF" userLabel="Politeness Text View">
+                                <rect key="frame" x="265" y="347" width="32" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Accuracy" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKN-px-H8q">
@@ -86,10 +85,9 @@
                                     <action selector="accuracyChange:" destination="vXZ-lx-hvc" eventType="valueChanged" id="mfy-VY-UG7"/>
                                 </connections>
                             </slider>
-                            <textView opaque="NO" contentMode="left" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2WU-vu-5cw" userLabel="Accuracy Text View">
-                                <rect key="frame" x="249" y="420" width="64" height="24"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textView opaque="NO" contentMode="left" fixedFrame="YES" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2WU-vu-5cw" userLabel="Accuracy Text View">
+                                <rect key="frame" x="265" y="410" width="32" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" fixedFrame="YES" text="Promptness" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BVX-a1-2e1">
@@ -104,20 +102,21 @@
                                     <action selector="promptnessChange:" destination="vXZ-lx-hvc" eventType="valueChanged" id="VXL-kO-NCp"/>
                                 </connections>
                             </slider>
-                            <textView opaque="NO" contentMode="left" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5m-Cb-61f" userLabel="Promptness Text View">
-                                <rect key="frame" x="249" y="484" width="64" height="24"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textView opaque="NO" contentMode="left" fixedFrame="YES" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="b5m-Cb-61f" userLabel="Promptness Text View">
+                                <rect key="frame" x="265" y="475" width="32" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="ahx-yS-Usr" appends="YES" id="iqB-OR-GGh"/>
                         </connections>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="Tip Calculator" id="b4I-73-TbX"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="accuracySlider" destination="WSp-Qc-BqZ" id="aHa-xe-NBU"/>
                         <outlet property="accuracyTextView" destination="2WU-vu-5cw" id="yoo-jN-fWI"/>
@@ -126,6 +125,7 @@
                         <outlet property="politenessTextView" destination="lbc-pM-hLF" id="ODF-hD-IxW"/>
                         <outlet property="promptnessSlider" destination="I7G-Pu-kbo" id="k2w-1r-BVQ"/>
                         <outlet property="promptnessTextView" destination="b5m-Cb-61f" id="OAe-7z-Gaa"/>
+                        <outlet property="tipPercentTextView" destination="iR0-1n-KTX" id="T8Z-SR-UYT"/>
                         <outlet property="tipTextView" destination="GBY-XJ-qxb" id="fZs-mq-GBX"/>
                         <outlet property="totalTextView" destination="Jca-qB-h4K" id="cL9-nP-Bcu"/>
                     </connections>
@@ -142,7 +142,8 @@
         <!--Navigation Controller-->
         <scene sceneID="Z8q-v5-ZBi">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8WL-J8-7Z9" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="8WL-J8-7Z9" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="OCt-Cz-E52">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -158,4 +159,7 @@
             <point key="canvasLocation" x="695" y="1211"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="background" width="640" height="400"/>
+    </resources>
 </document>

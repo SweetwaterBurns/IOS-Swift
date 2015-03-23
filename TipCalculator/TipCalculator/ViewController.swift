@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     let tipCalc = TipCalculator(billTotal: 0.00, politeness: 3, accuracy: 3, promptness: 3)
 
     @IBOutlet weak var billTextField: UITextField!
+    @IBOutlet weak var tipPercentTextView: UITextView!
     @IBOutlet weak var tipTextView: UITextView!
     @IBOutlet weak var totalTextView: UITextView!
     
@@ -70,7 +71,7 @@ class ViewController: UIViewController {
             tipCalc.billTotal = Double((billTextField.text as NSString).doubleValue)
             billTextField.text = String(format: "%0.2f", tipCalc.billTotal)
         }
-        
+        tipPercentTextView.text = "Tip (" + String(tipCalc.promptness + tipCalc.accuracy + tipCalc.politeness) + "%)"
         tipTextView.text = String(format: "%0.2f", tipCalc.tip)
         totalTextView.text = String(format: "%0.2f", tipCalc.total)
         politenessSlider.value = Float(tipCalc.politeness)
