@@ -19,6 +19,8 @@
 		6D200F171ADECF00002DEC7D /* GameObjectNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D200F161ADECF00002DEC7D /* GameObjectNode.swift */; };
 		6D200F191AE0B344002DEC7D /* StarPing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6D200F181AE0B344002DEC7D /* StarPing.wav */; };
 		6D200F1B1AE0B963002DEC7D /* Level01.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D200F1A1AE0B963002DEC7D /* Level01.plist */; };
+		6D4A1CA11AE5315B00C6EC96 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4A1CA01AE5315B00C6EC96 /* GameState.swift */; };
+		6D4A1CA31AE5515F00C6EC96 /* EndGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4A1CA21AE5515E00C6EC96 /* EndGameScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		6D200F161ADECF00002DEC7D /* GameObjectNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObjectNode.swift; sourceTree = "<group>"; };
 		6D200F181AE0B344002DEC7D /* StarPing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = StarPing.wav; path = ../StarPing.wav; sourceTree = "<group>"; };
 		6D200F1A1AE0B963002DEC7D /* Level01.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Level01.plist; path = ../Level01.plist; sourceTree = "<group>"; };
+		6D4A1CA01AE5315B00C6EC96 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		6D4A1CA21AE5515E00C6EC96 /* EndGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndGameScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,8 +94,10 @@
 			isa = PBXGroup;
 			children = (
 				6D200EEE1ADEC1A8002DEC7D /* AppDelegate.swift */,
+				6D4A1CA21AE5515E00C6EC96 /* EndGameScene.swift */,
 				6D200EF21ADEC1A8002DEC7D /* GameScene.swift */,
 				6D200F161ADECF00002DEC7D /* GameObjectNode.swift */,
+				6D4A1CA01AE5315B00C6EC96 /* GameState.swift */,
 				6D200EF41ADEC1A8002DEC7D /* GameViewController.swift */,
 				6D200EF61ADEC1A8002DEC7D /* Main.storyboard */,
 				6D200EF91ADEC1A8002DEC7D /* Images.xcassets */,
@@ -237,7 +243,9 @@
 			files = (
 				6D200EF31ADEC1A8002DEC7D /* GameScene.swift in Sources */,
 				6D200EF51ADEC1A8002DEC7D /* GameViewController.swift in Sources */,
+				6D4A1CA11AE5315B00C6EC96 /* GameState.swift in Sources */,
 				6D200F171ADECF00002DEC7D /* GameObjectNode.swift in Sources */,
+				6D4A1CA31AE5515F00C6EC96 /* EndGameScene.swift in Sources */,
 				6D200EEF1ADEC1A8002DEC7D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

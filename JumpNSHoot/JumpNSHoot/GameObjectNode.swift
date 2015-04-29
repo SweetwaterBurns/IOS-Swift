@@ -18,10 +18,17 @@ enum PlatformType: Int {
     case Break
 }
 
+enum MonsterType: Int {
+    case Slow = 0
+    case Fast
+}
+
 struct CollisionCategoryBitmask {
     static let Player: UInt32 = 0x00
     static let Star: UInt32 = 0x01
     static let Platform: UInt32 = 0x02
+    static let Bullet: UInt32 = 0x04
+    static let Monster: UInt32 = 0x16
 }
 
 class GameObjectNode: SKNode {
@@ -33,9 +40,13 @@ class GameObjectNode: SKNode {
     }
     
     func checkNodeRemoval(playerY: CGFloat) {
-        if playerY > self.position.y + 300.0 {
+        if playerY > self.position.y + 400.0 {
             self.removeFromParent()
         }
+    }
+    
+    func collisionWithBullet() -> Bool {
+        return false
     }
 }
 
@@ -51,6 +62,8 @@ class StarNode: GameObjectNode {
         runAction(starSound, completion: {
             self.removeFromParent()
             })
+        GameState.sharedInstance.score += (starType == .Normal ? 20 : 100)
+        GameState.sharedInstance.stars += (starType == .Normal ? 1 : 5)
         return true
     }
 }
@@ -69,5 +82,37 @@ class PlatformNode: GameObjectNode {
             }
         }
         return false
+    }
+}
+
+class MonsterNode: GameObjectNode {
+    
+    var monsterType: MonsterType!
+    
+    override func collisionWithPlayer(player: SKNode) -> Bool {
+        return false
+    }
+    
+    override func checkNodeRemoval(playerY: CGFloat) {
+        
+        if  (playerY > self.position.y + 400.0){
+            self.removeFromParent()
+        }
+ /*
+        if self.position.x + 45 < 0 {
+            self.removeFromParent()
+        }
+        
+        if self.position.x - 40 > 320 {
+            self.removeFromParent()
+        }*/
+    }
+    
+    override func collisionWithBullet() -> Bool {
+        
+        self.removeFromParent()
+
+        //GameState.sharedInstance.score += (monsterType == .Slow ? 20 : 100)
+        return true
     }
 }
