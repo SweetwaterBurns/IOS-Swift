@@ -63,8 +63,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var maxPlayerY: Int!
     var gameOver = false
     var lastBackgroundAdd: CGFloat = 0.00
+    var lastMidgroundAdd: CGFloat = 0.00
     var lastPlatformAdd: CGFloat = 30
-    var lastStarAdd: CGFloat = 30
+    var lastStarAdd: CGFloat = 128
     var lastMonsterAdd: CGFloat = 800
 
     required init?(coder aDecoder: NSCoder) {
@@ -76,6 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backgroundColor = SKColor.whiteColor()
         maxPlayerY = 80
         GameState.sharedInstance.score = 0
+        GameState.sharedInstance.stars = 0
         gameOver = false
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
         physicsWorld.contactDelegate = self
@@ -94,6 +96,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         createPlatforms(1.0)
         
+        foregroundNode.addChild(createStarAtPosition(CGPoint(x: 320 / 2, y: 30), ofType: .Normal))
+
+            
         player = createPlayer()
         foregroundNode.addChild(player)
         
@@ -168,21 +173,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerNode.physicsBody?.usesPreciseCollisionDetection = true
         playerNode.physicsBody?.categoryBitMask = CollisionCategoryBitmask.Player
         playerNode.physicsBody?.collisionBitMask = 0
-        playerNode.physicsBody?.contactTestBitMask = CollisionCategoryBitmask.Star | CollisionCategoryBitmask.Platform
+        playerNode.physicsBody?.contactTestBitMask = CollisionCategoryBitmask.Star | CollisionCategoryBitmask.Platform | CollisionCategoryBitmask.Monster
         
         return playerNode
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         if player.physicsBody!.dynamic {
-            if GameState.sharedInstance.stars > 4 {
-            let touch = touches.first as! UITouch
-            let touchLocation = touch.locationInNode(self) + CGPoint(x: 0, y: player.position.y - 200)
-            println("Touch Ended at x: " + "\(touchLocation.x)" + " y: " + "\(touchLocation.y)")
-            createBulletAtLocation(touchLocation)
-            GameState.sharedInstance.stars -= 5
+       /*     if GameState.sharedInstance.stars > 4 {
+                let touch = touches.first as! UITouch
+                let touchLocation = touch.locationInNode(self) + CGPoint(x: 0, y: player.position.y - 200)
+                println("Touch at x: " + "\(touchLocation.x)" + " y: " + "\(touchLocation.y)")
+                createBulletAtLocation(touchLocation)
+                GameState.sharedInstance.stars -= 5
+                updateHUDnow()
             }
-            return
+        */    return
         }
         
         tapToStartNode.removeFromParent()
@@ -190,15 +196,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.dynamic = true
         player.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 20.0))
     }
-    /*
+    
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch = touches.first as! UITouch
-        let touchLocation = touch.previousLocationInNode(self)
-        println("Touch Ended at x: " + String(format: "%d", touchLocation.x) + " y: " + String(format: "%d", touchLocation.y))
-        
-        createBulletAtLocation(touchLocation)
+        if player.physicsBody!.dynamic {
+            if GameState.sharedInstance.stars > 4 {
+                let touch = touches.first as! UITouch
+                let touchLocation = touch.locationInNode(self) + CGPoint(x: 0, y: player.position.y - 200)
+                println("Touch at x: " + "\(touchLocation.x)" + " y: " + "\(touchLocation.y)")
+                createBulletAtLocation(touchLocation)
+                GameState.sharedInstance.stars -= 5
+                updateHUDnow()
+            }
+        }
     }
-    */
+
     func createStarAtPosition(position: CGPoint, ofType type: StarType) -> StarNode  {
         
         let node = StarNode()
@@ -236,9 +247,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
+            var print = NSStringFromClass(self.classForCoder) + "." + __FUNCTION__ + "bodyA < BodyB"
+            print += " firstBody: " + String(firstBody.categoryBitMask) + " secondBody: " + String(secondBody.categoryBitMask)
+            println(print)
+            //println(NSStringFromClass(self.classForCoder) + "." + __FUNCTION__ + " firstBody: " + firstBody.categoryBitMask + " secondBody: " + secondBody.categoryBitMask)
         } else {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
+            var print = NSStringFromClass(self.classForCoder) + "." + __FUNCTION__ + "bodyA > BodyB"
+            print += " firstBody: " + String(firstBody.categoryBitMask) + " secondBody: " + String(secondBody.categoryBitMask)
+            println(print)
+        }
+        
+        if secondBody.categoryBitMask == CollisionCategoryBitmask.Bullet {
+            return
         }
         
         if secondBody.categoryBitMask == CollisionCategoryBitmask.Monster {
@@ -253,17 +275,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 updateHUD = monsterObject.collisionWithBullet()
                 firstBody.node?.removeFromParent()
             }
-        } else {
-         //   let gameObject = secondBody.node as! GameObjectNode
-         //   updateHUD = gameObject.collisionWithPlayer(player)
-            let whichNode = (firstBody.node != player) ? firstBody.node : secondBody.node
-            let other = whichNode as! GameObjectNode
-            updateHUD = other.collisionWithPlayer(player)
+        } else if firstBody.categoryBitMask == CollisionCategoryBitmask.Player {
+            let gameObject = secondBody.node as! GameObjectNode
+            updateHUD = gameObject.collisionWithPlayer(player)
+         //   let whichNode = (firstBody.node != player) ? firstBody.node : secondBody.node
+         //   let other = whichNode as! GameObjectNode
+         //   updateHUD = other.collisionWithPlayer(player)
         }
 
         if updateHUD {
-            lblStars.text = String(format: "X %d", GameState.sharedInstance.stars)
-            lblScore.text = String(format: "%d", GameState.sharedInstance.score)
+            updateHUDnow()
         }
 
     }
@@ -303,21 +324,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for index in 0...9 {
             var spriteName: String
             
-            let r = arc4random() % 2
-            if r > 0 {
-                spriteName = "BranchRight"
+            let r = arc4random() % 3
+            switch r {
+            case 0:
+                spriteName = "Planet01"
                 anchor = CGPoint(x: 1.0, y: 0.5)
-                xPosition = self.size.width
-            } else {
-                spriteName = "BranchLeft"
-                anchor = CGPoint(x: 0.0, y: 0.5)
-                xPosition = 0.0
+                xPosition = CGFloat(arc4random() % 320)
+            case 1:
+                spriteName = "Planet02"
+                anchor = CGPoint(x: 1.0, y: 0.5)
+                xPosition = CGFloat(arc4random() % 320)
+            case 2:
+                spriteName = "Planet03"
+                anchor = CGPoint(x: 1.0, y: 0.5)
+                xPosition = CGFloat(arc4random() % 320)
+            default:
+                spriteName = "Planet02"
+                anchor = CGPoint(x: 1.0, y: 0.5)
+                xPosition = CGFloat(arc4random() % 320)
             }
             
-            let branchNode = SKSpriteNode(imageNamed: spriteName)
-            branchNode.anchorPoint = anchor
-            branchNode.position = CGPoint(x: xPosition, y: 500.0 * CGFloat(index))
-            theMidgroundNode.addChild(branchNode)
+            let planetNode = SKSpriteNode(imageNamed: spriteName)
+            planetNode.anchorPoint = anchor
+            planetNode.position = CGPoint(x: xPosition + 35, y: lastMidgroundAdd + 640 * CGFloat(index))
+            
+            if planetNode.position.y > lastMidgroundAdd {
+                lastMidgroundAdd = planetNode.position.y
+            }
+            theMidgroundNode.addChild(planetNode)
+            
         }
         return theMidgroundNode
     }
@@ -374,7 +409,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             var newBackground = createBackgroundNode()
             backgroundNode.addChild(newBackground)
         }
-
+       
+        if CGFloat(maxPlayerY + 640) > lastMidgroundAdd {
+            var newMidground = createMidGroundNode()
+            midgroundNode.addChild(newMidground)
+        }
+        
         if Int(player.position.y) < maxPlayerY - 1000 {
             endGame()
         }
@@ -489,8 +529,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         node.physicsBody?.usesPreciseCollisionDetection = true
         node.physicsBody?.categoryBitMask = CollisionCategoryBitmask.Monster
-        node.physicsBody?.contactTestBitMask = CollisionCategoryBitmask.Player | CollisionCategoryBitmask.Bullet
-        
+        node.physicsBody?.contactTestBitMask = CollisionCategoryBitmask.Bullet
+
         if lastMonsterAdd < node.position.y {
             lastMonsterAdd = node.position.y
         }
@@ -517,15 +557,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         bullet.physicsBody = SKPhysicsBody(circleOfRadius: bullet.size.width / 2)
         bullet.physicsBody?.dynamic = true
+        bullet.physicsBody?.collisionBitMask = 0
         bullet.physicsBody?.categoryBitMask = CollisionCategoryBitmask.Bullet
+        //bullet.physicsBody?.contactTestBitMask = 0//CollisionCategoryBitmask.Platform | CollisionCategoryBitmask.Star
         bullet.physicsBody?.usesPreciseCollisionDetection = true
         
         foregroundNode.addChild(bullet)
         let direction = offset.normalized()
         let shootAmount = direction * 1000
         let realDest = shootAmount + bullet.position
-        let actionMove = SKAction.moveTo(realDest, duration: 2.0)
+        let actionMove = SKAction.moveTo(realDest, duration: 1.5)
         let actionMoveDone = SKAction.removeFromParent()
         bullet.runAction(SKAction.sequence([actionMove, actionMoveDone]))
+    }
+    
+    func updateHUDnow() {
+        lblStars.text = String(format: "X %d", GameState.sharedInstance.stars)
+        lblScore.text = String(format: "%d", GameState.sharedInstance.score)
     }
 }

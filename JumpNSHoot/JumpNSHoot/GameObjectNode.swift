@@ -24,11 +24,11 @@ enum MonsterType: Int {
 }
 
 struct CollisionCategoryBitmask {
-    static let Player: UInt32 = 0x00
-    static let Star: UInt32 = 0x01
-    static let Platform: UInt32 = 0x02
-    static let Bullet: UInt32 = 0x04
-    static let Monster: UInt32 = 0x16
+    static let Player: UInt32 = 0b00
+    static let Star: UInt32 = 0b01
+    static let Platform: UInt32 = 0b10
+    static let Bullet: UInt32 = 0b100
+    static let Monster: UInt32 = 0b1000
 }
 
 class GameObjectNode: SKNode {
@@ -112,7 +112,7 @@ class MonsterNode: GameObjectNode {
         
         self.removeFromParent()
 
-        //GameState.sharedInstance.score += (monsterType == .Slow ? 20 : 100)
+        GameState.sharedInstance.score +=  100
         return true
     }
 }
