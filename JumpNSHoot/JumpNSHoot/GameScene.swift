@@ -324,29 +324,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for index in 0...9 {
             var spriteName: String
             
+            anchor = CGPoint(x: 0.0, y: 0.5)
+            xPosition = CGFloat(arc4random() % 320) * scaleFactor
             let r = arc4random() % 3
+            
             switch r {
-            case 0:
-                spriteName = "Planet01"
-                anchor = CGPoint(x: 1.0, y: 0.5)
-                xPosition = CGFloat(arc4random() % 320)
             case 1:
                 spriteName = "Planet02"
-                anchor = CGPoint(x: 1.0, y: 0.5)
-                xPosition = CGFloat(arc4random() % 320)
             case 2:
                 spriteName = "Planet03"
-                anchor = CGPoint(x: 1.0, y: 0.5)
-                xPosition = CGFloat(arc4random() % 320)
             default:
-                spriteName = "Planet02"
-                anchor = CGPoint(x: 1.0, y: 0.5)
-                xPosition = CGFloat(arc4random() % 320)
+                spriteName = "Planet01"
             }
             
             let planetNode = SKSpriteNode(imageNamed: spriteName)
             planetNode.anchorPoint = anchor
-            planetNode.position = CGPoint(x: xPosition + 35, y: lastMidgroundAdd + 640 * CGFloat(index))
+            planetNode.position = CGPoint(x: xPosition, y: lastMidgroundAdd + 500 * CGFloat(index))
             
             if planetNode.position.y > lastMidgroundAdd {
                 lastMidgroundAdd = planetNode.position.y
