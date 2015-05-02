@@ -39,10 +39,12 @@ class GameObjectNode: SKNode {
         return false
     }
     
-    func checkNodeRemoval(playerY: CGFloat) {
+    func checkNodeRemoval(playerY: CGFloat) -> Bool{
         if playerY > self.position.y + 400.0 {
             self.removeFromParent()
+            return true
         }
+        return false
     }
     
     func collisionWithBullet() -> Bool {
@@ -77,7 +79,7 @@ class PlatformNode: GameObjectNode {
         if player.physicsBody?.velocity.dy < 0 {
             player.physicsBody?.velocity = CGVector(dx: player.physicsBody!.velocity.dx, dy: 250.0)
             
-            if platformType == .Break {
+            if platformType == .Break && player.physicsBody?.categoryBitMask == CollisionCategoryBitmask.Player {
                 self.removeFromParent()
             }
         }
@@ -93,10 +95,11 @@ class MonsterNode: GameObjectNode {
         return false
     }
     
-    override func checkNodeRemoval(playerY: CGFloat) {
+/*    override func checkNodeRemoval(playerY: CGFloat) -> Bool {
         
         if  (playerY > self.position.y + 400.0){
             self.removeFromParent()
+            return true
         }
  /*
         if self.position.x + 45 < 0 {
@@ -106,8 +109,9 @@ class MonsterNode: GameObjectNode {
         if self.position.x - 40 > 320 {
             self.removeFromParent()
         }*/
+        return false
     }
-    
+  */
     override func collisionWithBullet() -> Bool {
         
         self.removeFromParent()

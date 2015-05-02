@@ -274,6 +274,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let monsterObject = secondBody.node as! MonsterNode
                 updateHUD = monsterObject.collisionWithBullet()
                 firstBody.node?.removeFromParent()
+            } else if firstBody.categoryBitMask == CollisionCategoryBitmask.Platform {
+                println(NSStringFromClass(self.classForCoder) + "." + __FUNCTION__ + " Monster vs Platform")
+                let gameObject = firstBody.node as! GameObjectNode
+                gameObject.collisionWithPlayer(secondBody.node as! GameObjectNode)
             }
         } else if firstBody.categoryBitMask == CollisionCategoryBitmask.Player {
             let gameObject = secondBody.node as! GameObjectNode
@@ -382,19 +386,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         foregroundNode.enumerateChildNodesWithName("NODE_MONSTER", usingBlock: {
             (node, stop) in
             let monster = node as! MonsterNode
-            monster.checkNodeRemoval(self.player.position.y)
-        })
+            if (!monster.checkNodeRemoval(self.player.position.y)) {
+                
+                //monster.physicsBody!.dynamic = true
+                let dt:CGFloat = (monster.monsterType == MonsterType.Slow ? 5 : 3)
+                //let distance: CGFloat = self.player.position.x - monster.position.x
+                //let distance = CGVector(dx: self.player.position.x - monster.position.x, dy: monster.physicsBody!.velocity.dy) //self.player.position.y - monster.position.y)
+                //let impulse = CGVector(dx: distance.dx / (dt * dt), dy: 0.00)//distance.dy / dt)
+                //monster.physicsBody!.velocity=velocity
+                // Vector to make monster move towards player
+                let offset = self.player.position - monster.position
+                let direction = offset.normalized()
+                let distance = CGVector(dx: direction.x, dy: monster.physicsBody!.velocity.dy) //self.player.position.y - monster.position.y)
+                let impulse = CGVector(dx: distance.dx / dt, dy: 0 )
+
+                
+                monster.physicsBody?.applyImpulse(impulse)
+                monster.physicsBody!.dynamic = true
+                
+            }
+            })
         
-        if CGFloat(maxPlayerY + 640) * scaleFactor > lastMonsterAdd {
+        if CGFloat(maxPlayerY + 640) > lastMonsterAdd {
             createMonsters(lastMonsterAdd)
         }
         
-        if CGFloat(maxPlayerY + 640) * scaleFactor > lastStarAdd {
+        if CGFloat(maxPlayerY + 640) > lastStarAdd {
             createStars(lastStarAdd)
         }
         
         
-        if CGFloat(maxPlayerY + 640) * scaleFactor > lastPlatformAdd {
+        if CGFloat(maxPlayerY + 640) > lastPlatformAdd {
             createPlatforms(lastPlatformAdd)
         }
         
@@ -413,7 +435,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override func didSimulatePhysics() {
+     override func didSimulatePhysics() {
         player.physicsBody?.velocity = CGVector(dx: xAcceleration * 400.0, dy: player.physicsBody!.velocity.dy)
         if player.position.x < -20.0 {
             player.position = CGPoint(x: self.size.width + 20.0, y: player.position.y)
@@ -519,10 +541,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody?.friction = 0.0
         node.physicsBody?.angularDamping = 0.0
         node.physicsBody?.linearDamping = 0.0
-        
+        node.physicsBody?.collisionBitMask = 0
         node.physicsBody?.usesPreciseCollisionDetection = true
         node.physicsBody?.categoryBitMask = CollisionCategoryBitmask.Monster
-        node.physicsBody?.contactTestBitMask = CollisionCategoryBitmask.Bullet
+        node.physicsBody?.contactTestBitMask = CollisionCategoryBitmask.Bullet | CollisionCategoryBitmask.Platform
 
         if lastMonsterAdd < node.position.y {
             lastMonsterAdd = node.position.y
@@ -532,7 +554,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func createMonsters(basey: CGFloat) {
-        var baseyForUse = basey + CGFloat(arc4random() % 320 + 128)
+        var baseyForUse = basey + CGFloat(arc4random() % 320 + 196)
         var type = MonsterType(rawValue: Int(arc4random() % 2))
         let monsterNode = createMonsterAtPosition(CGPoint(x: CGFloat(arc4random() % 320), y: baseyForUse), ofType: type!)
 /*
