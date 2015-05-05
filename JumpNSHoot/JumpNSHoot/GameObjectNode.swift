@@ -61,11 +61,13 @@ class StarNode: GameObjectNode {
     override func collisionWithPlayer(player: SKNode) -> Bool {
         player.physicsBody?.velocity = CGVector(dx: player.physicsBody!.velocity.dx, dy: 400.0)
         
-        runAction(starSound, completion: {
-            self.removeFromParent()
-            })
         GameState.sharedInstance.score += (starType == .Normal ? 20 : 100)
         GameState.sharedInstance.stars += (starType == .Normal ? 1 : 5)
+
+        runAction(starSound, completion: {
+            self.removeFromParent()
+        })
+
         return true
     }
 }
@@ -94,29 +96,11 @@ class MonsterNode: GameObjectNode {
     override func collisionWithPlayer(player: SKNode) -> Bool {
         return false
     }
-    
-/*    override func checkNodeRemoval(playerY: CGFloat) -> Bool {
-        
-        if  (playerY > self.position.y + 400.0){
-            self.removeFromParent()
-            return true
-        }
- /*
-        if self.position.x + 45 < 0 {
-            self.removeFromParent()
-        }
-        
-        if self.position.x - 40 > 320 {
-            self.removeFromParent()
-        }*/
-        return false
-    }
-  */
+
     override func collisionWithBullet() -> Bool {
         
+        GameState.sharedInstance.score += (monsterType == .Slow ? 50 : 100)
         self.removeFromParent()
-
-        GameState.sharedInstance.score +=  100
         return true
     }
 }
